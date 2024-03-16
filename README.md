@@ -1,1 +1,1 @@
-# Spectral-BLDC-docs
+# SPECTRAL-BLDC-DOCS
