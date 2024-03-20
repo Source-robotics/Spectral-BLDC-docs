@@ -49,6 +49,17 @@ Multiple Spectral BLDC drivers and nodes can be connected to single CAN bus usin
 
 <p align="left"> <img src="../assets/daisy_chain.png" alt="drawing" width="700"/> <br /> </p> 
 
+## **Thermistor connection**
+
+Solder the termistor like shown in the image. 
+!!! Tip annotate "Thermistor is disabled by default. To enable it use command #Term 1" 
+
+<p align="left"> <img src="../assets/TERM11.png" alt="drawing" width="600"/> <br /> </p> 
+
+Thermistor needs to be placed inside the motor coils. You can usually do that thru the one of the mounting holes on the bottom of the motor. 
+
+<p align="left"> <img src="../assets/TERM2.png" alt="drawing" width="600"/> <br /> </p> 
+
 
 ## **Status**
 Normal operation | Calibration | Error mode 
