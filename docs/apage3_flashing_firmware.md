@@ -23,7 +23,7 @@
 ## **Flashing using visual studio code**
 Download visual studio code: [Link](https://code.visualstudio.com/download)<br />
 
-1. Open Spectral BLDC firmware folder in VS code. (You need to have platformio installed)
+1. Open [Spectral BLDC firmware](https://github.com/PCrnjak/Spectral-Micro-BLDC-controller/tree/main/Spectral%20BLDC%20Firmware) folder in VS code. (You need to have platformio installed)
 2. Press uplaod in VS code (Bottom left corner in VS code)
 <p align="left"> <img src="../assets/VSUPLOAD.png" alt="drawing" width="800"/> <br /> </p>
 
@@ -34,10 +34,21 @@ Download STM32 ST-LINK utility [Link](https://www.st.com/en/development-tools/st
 !!! Note annotate "HEX and binaries" 
     Using STM32 ST-LINK Utility you can flash only Binary or HEX files. These can be obtained from compiling source code of spectral BLDC firmware
 
-1. TODO
-2. TODO
+**Open STM32 ST-LINK utility Drag and drop the [binary file](https://github.com/PCrnjak/Spectral-Micro-BLDC-controller/tree/main/Binaries) inside.**
 
+<p align="left"> <img src="../assets/stlink2.PNG" alt="drawing" width="700"/> <br /> </p>
 
+**Go to Target/settings and make sure they look like this.**
+
+<p align="left"> <img src="../assets/stlink1.PNG" alt="drawing" width="700"/> <br /> </p>
+
+**Go to Target/connect. In case you get a error try to install stlink drivers from [here!](https://www.st.com/en/development-tools/stsw-link009.html)**
+
+<p align="left"> <img src="../assets/stlink_conn.png" alt="drawing" width="700"/> <br /> </p>
+
+**Go to Target/program and verify. You should get pink output msg like below.**
+
+<p align="left"> <img src="../assets/stlink_prog.png" alt="drawing" width="700"/> <br /> </p>
 
 
 
