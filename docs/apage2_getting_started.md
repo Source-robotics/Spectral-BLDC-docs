@@ -2,14 +2,15 @@
 
 ## **Recommended hardware**
 
-1. [Diametrically magnetized magnet]()
+1. [Diametrically magnetized magnet](https://source-robotics.com/products/6x2-5mm-diametrical-neodymium-magnet)
 2. BLDC motor; check [here]() for all tested motors
 3. [Programming adapter](https://source-robotics.com/products/jtag-programming-adapter-1-27-pitch)
 4. [Serial adapter]()
 5. [CAN adapter](https://source-robotics.com/products/canvas-usb-to-can-adapter) 
-6. [Termistor]()
+6. [Termistor](https://source-robotics.com/products/100k-ntc-thermistor)
 7. [CAN wires](https://source-robotics.com/products/spectral-micro-can-cable) and [power wires](https://source-robotics.com/products/spectral-micro-power-cable)
 
+!!! Note annotate "" 
 
 ## **Hardware setup**
 
@@ -25,6 +26,7 @@ Some hardware considerations:
 
 <p align="left"> <img src="../assets/mag_dist.PNG" alt="drawing" width="800"/> <br /> </p>
 
+!!! Note annotate "" 
 
 ## **Electrical connections**
 !!! Danger annotate "REVERSING POLARITIY ON DC+- WILL DESTROY YOUR BOARD." 
@@ -39,6 +41,12 @@ Some hardware considerations:
 6. When uploading code connect JTAG adapter to **JTAG connector**
 
 
+!!! Danger annotate "**Cable orientation**" 
+    **ALL cables used for dasiy chain (CAN and power) need to to follow orientation as shown on the image below! Failing to follow that will destroy your motor controller! All correct cables can be bought here: https://source-robotics.com/pages/connectors-and-cables** <br />
+
+<p align="left"> <img src="../assets/orientation.png" alt="drawing" width="700"/> <br /> </p> 
+
+!!! Note annotate "" 
 
 ## **Connecting multiple motors (daisy chaining)**
 
@@ -49,6 +57,8 @@ Multiple Spectral BLDC drivers and nodes can be connected to single CAN bus usin
 
 <p align="left"> <img src="../assets/daisy_chain.png" alt="drawing" width="700"/> <br /> </p> 
 
+!!! Note annotate "" 
+
 ## **Thermistor connection**
 
 Solder the termistor like shown in the image. 
@@ -56,10 +66,11 @@ Solder the termistor like shown in the image.
 
 <p align="left"> <img src="../assets/TERM11.png" alt="drawing" width="600"/> <br /> </p> 
 
-Thermistor needs to be placed inside the motor coils. You can usually do that thru the one of the mounting holes on the bottom of the motor. 
+Thermistor needs to be placed inside the motor coils. You can usually do that thru the one of the mounting holes on the bottom of the motor. You can apply thermal cement on the thermistor in the motor coils to secure it in place and improve termal conductivity.
 
 <p align="left"> <img src="../assets/TERM2.png" alt="drawing" width="600"/> <br /> </p> 
 
+!!! Note annotate "" 
 
 ## **Status**
 Normal operation | Calibration | Error mode 

@@ -1,5 +1,6 @@
 # CAN interface
 
+!!! Note annotate "" 
 
 CAN bus should be your primary choice when developing robotic aplication. <br />
 Spectral micro uses 5V CAN bus that adheres to the CAN 2.0 standard. Each Spectral micro has 2 CAN bus connectors allowing you to easily daisy chain multiple devices. 
@@ -14,17 +15,22 @@ Node IDs can range from 0 - 15 Meaning you can have maximum 16 different devices
 Bits **6 - 1** of the CAN ID represent Command ID.<br />
 Command IDs can range from 0 - 63.
 
-Bit **0** represents error bit. If spectral micro BLDC controller has any active error this bit will be set to 1.
+Bit **0** represents error bit. If spectral micro BLDC controller has any active error this bit will be set to 1. Note this bit is send always by the driver and is independent about the command ID and data.
 
 Node with smallest Node ID is strongest in CAN bus arbitration.
 
-If you want to learn more about CAN bus we recommend you read this [article!]()
+**If you want to learn more about CAN bus we recommend you read this [article!]()**
+
+**You can our [Python CAN bus API](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main) to communicate with your Spectral BLDC controllers!** <br />
+**If you want a simple examples on how to write Python scripts to control your motor over CAN [check this guide!](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Python%20guide/)**
+
+!!! Note annotate "" 
 
 ## **List of commands**
 
-!!! Tip annotate "**Messages prefixed with Send are messages that the host can send to the Spectral BLDC controller.**" 
+!!! Tip annotate "**Messages prefixed with Send are messages that the host can send to the Spectral BLDC controller. Note that to some of these messages the driver will respond with pre-defined message prefixed with Respond**" 
 !!! Note annotate "**Messages prefixed with Respond  are messages that the Spectral BLDC controller can send to the host.**" 
-!!! Danger annotate "** Messages prefixed with Send_Respond are messages that host can request from BLDC controller and it will respond with the desired data packet with the same Command ID as recived command. Host is sending these msgs with RTR bit and Spectral is responding with RTR 0 and some data packet. **" 
+!!! Danger annotate "**Messages prefixed with Send_Respond are messages that host can request from BLDC controller and it will respond with the desired data packet with the same Command ID as recived command. Host is sending these msgs with RTR bit and Spectral is responding with RTR 0 and some data packet.**" 
 
 
  Command ID | Name | Type | Data 
@@ -70,6 +76,8 @@ If you want to learn more about CAN bus we recommend you read this [article!]()
 28 |`Send_Respond_Encoder_data` | Send/Respond | Position [Encoder ticks] <br /> Velocity [Encoder ticks/s]
 10 |`Send_Respond_Ping` | Send/Respond | None
 
+!!! Note annotate "" 
+
 ## **Watchdog**
 
 **By default watchdog is turned off.**<br />
@@ -80,7 +88,7 @@ To clear the error you will need to call:
 
     "Send_Clear_Error"
 
-
+!!! Note annotate "" 
 
 ## **Heartbeat**
 **By default heartbeat will send data at 1Hz or every 1 second.**<br />
@@ -91,77 +99,650 @@ In case your spectral BLDC sends any other data (as a response to command) it wi
 !!! Tip annotate "**Heartbeat timer reset**" 
     For example if spectral BLDC is sending data every 10ms and heartbeat is setup to send every 1s; hearbeat will never send its data. 
 
+!!! Note annotate "" 
+
 ## **Cyclic**
 **TODO**
 
+!!! Note annotate "" 
 
-## **Detailed explanation of commands**
+## **Commands**
 
 
 ### **Respond_Heartbeat**
 
+!!! Note annotate "" 
+
+* Command ID: 9 <br />
+* Direction: BLDC driver -> host <br />
+* Python call: None, this command is sent only by driver <br />
+* Length: 0 byte<br />
+* Type of frame: standard<br />
+
+---
+
 ### **Respond_data_pack_1**
 
+!!! Note annotate "" 
+
+* Command ID: 3 <br />
+* Direction: BLDC driver -> host <br />
+* Python call: None, this command is sent only by driver <br />
+* Length: 8 byte<br />
+* Type of frame: standard <br />
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
+---- | ---- | ---- 
+0 - 2 | position | signed 24bit 
+3 - 5 | velocity | signed 24bit  
+6 - 7 | current | signed 16bit  
+
+---
+
 ### **Respond_data_pack_2**
+Not used 
+
+---
 
 ### **Respond_data_pack_3**
+Not used 
+
+---
 
 ### **Respond_Gripper_data_pack**
 
+!!! Note annotate "" 
+
+* Command ID: 60 <br />
+* Direction: BLDC driver -> host <br />
+* Python call: None, this command is sent only by driver <br />
+* Length: 4 byte <br />
+* Type of frame: standard <br />
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
+---- | ---- | ---- | ----
+0  | gripper_position | unsigned 8bit |
+1-2 | gripper_current |  16 bit signed |
+3(bit 0) | gripper_activated | bit (0/1) | gripper activate (1) / deactivated (0)
+3(bit 1) | gripper_action_status | bit (0/1) |  1 is goto, 0 is idle or performing auto release or in calibration
+3(bit 2 and 3) | gripper_object_detection | 2 bit | 0 in motion, 1 object detected closing, 2 object detected opening, 3 at positon
+3(bit 4) | gripper_temperature_error | bit (0/1) | gripper_temperature_error
+3(bit 5) | gripper_timeout_error | bit (0/1) | gripper_timeout_error
+3(bit 6) | gripper_estop_error | bit (0/1) | gripper_estop_error
+3(bit 7) | gripper_calibrated | bit (0/1) | gripper calibration status; calibrated (1) / not calibrated (0)
+
+---
+
 ### **Send_data_pack_1**
 
+!!! Note annotate "" 
+
+* Command ID: 2 <br />
+* Direction: Host -> BLDC driver <br />
+* Python call: Send_data_pack_1() <br />
+* Type of frame: standard <br />
+* Length: 
+
+* 8 byte -  If using positon setpoint with speed and current feedforward
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 2 | Position | signed 24bit 
+3 - 5 | Velocity | signed 24bit  
+6 - 7 | Current | signed 16bit  
+
+* 5 byte -  If using speed setpoint and current feedforward
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 2 | Velocity | signed 24bit  
+3 - 5 | Current | signed 16bit  
+
+* 2 byte -  If using current setpoint
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 2 | Current | signed 16bit 
+
+Driver will respons to this command with:<br />
+**Respond_data_pack_1**
+
+---
+
 ### **Send_data_pack_2**
+Not used 
+
+---
 
 ### **Send_data_pack_3**
+Not used 
+
+---
 
 ### **Send_data_pack_PD**
 
+!!! Note annotate "" 
+
+* Command ID: 4 <br />
+* Direction: Host -> BLDC driver <br />
+* Python call: Send_data_pack_PD() <br />
+* Type of frame: standard <br />
+* Length: 8 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 2 | Position | signed 24bit 
+3 - 5 | Velocity | signed 24bit  
+6 - 7 | Current | signed 16bit  
+
+Driver will respond to this command with:<br />
+**Respond_data_pack_1**
+
+---
+
 ### **Send_gripper_data_pack**
+
+!!! Note annotate "" 
+
+* Command ID: 61 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_gripper_data_pack() <br />
+* Type of frame: standard <br />
+* Length: 5 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0  | Position | unsigned 8bit
+1 | Velocity | unsigned 8bit
+2-3 | Current | signed 16bit  
+4(bit 0)  | Gripper activate |  bit (0/1)
+4(bit 1)  | Gripper action status |  bit (0/1)
+4(bit 2)  | Gripper estop status |  bit (0/1)
+4(bit 3)  | Gripper release direction |  bit (0/1)
+
+Driver will respond to this command with:<br />
+**Respond_Gripper_data_pack**
+
+Alternatively you can send empty Send_gripper_data_pack command
+
+* Command ID: 61 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_gripper_data_pack() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+Driver will respons to this command with:<br />
+**Respond_Gripper_data_pack**
+
+---
 
 ### **Send_gripper_calibrate**
 
+!!! Note annotate "" 
+
+* Command ID: 62 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_gripper_calibrate() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_PD_Gains**
+
+!!! Note annotate "" 
+
+* Command ID: 16 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_PD_Gains() <br />
+* Type of frame: standard <br />
+* Length: 8 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | KP | float 32
+4 - 7 | KD | float 32 
+
+**Driver will not respond to this command!**<br />
+
+---
 
 ### **Send_Current_Gains**
 
+!!! Note annotate "" 
+
+* Command ID: 17 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Current_Gains() <br />
+* Type of frame: standard <br />
+* Length: 8 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | Kp_iq | float 32
+4 - 7 | Ki_iq | float 32 
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_Velocity_Gains**
+
+!!! Note annotate "" 
+
+* Command ID: 18 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Velocity_Gains() <br />
+* Type of frame: standard <br />
+* Length: 8 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | Kpv | float 32
+4 - 7 | Kiv | float 32 
+
+**Driver will not respond to this command!**<br />
+
+---
 
 ### **Send_Position_Gains**
 
+!!! Note annotate "" 
+
+* Command ID: 19 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Position_Gains() <br />
+* Type of frame: standard <br />
+* Length: 4 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | Kpp | float 32
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_Limits**
+
+!!! Note annotate "" 
+
+* Command ID: 20 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Limits() <br />
+* Type of frame: standard <br />
+* Length: 8 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | Velocity limit | float 32
+3 - 7 | Current limit | float 32 
+
+**Driver will not respond to this command!**<br />
+
+---
 
 ### **Send_Kt**
 
+!!! Note annotate "" 
+
+* Command ID: 22 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Kt() <br />
+* Type of frame: standard <br />
+* Length: 4 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | Kt | float 32
+
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_CAN_ID**
+
+!!! Note annotate "" 
+
+* Command ID: 11 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_CAN_ID() <br />
+* Type of frame: standard <br />
+* Length: 1 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 | ID | byte
+
+**Driver will not respond to this command!**<br />
+
+---
 
 ### **Send_ESTOP**
 
+!!! Note annotate "" 
+
+* Command ID: 0 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_ESTOP() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_Idle**
+
+!!! Note annotate "" 
+
+* Command ID: 12 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Idle() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+**Driver will not respond to this command!**<br />
+
+---
 
 ### **Send_Save_config**
 
+!!! Note annotate "" 
+
+* Command ID: 13 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Save_config() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_Reset**
+
+!!! Note annotate "" 
+
+* Command ID: 14 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Reset() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+**Driver will not respond to this command!**<br />
+
+---
 
 ### **Send_Clear_Error**
 
+!!! Note annotate "" 
+
+* Command ID: 1 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Clear_Error() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+**Driver will not respond to this command!**<br />
+
+---
+
 ### **Send_Watchdog**
+
+!!! Note annotate "" 
+
+* Command ID: 15 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Watchdog() <br />
+* Type of frame: REMOTE <br />
+* Length: 5 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | watchdog_time_ms | int
+4  | Action | int
+
+---
 
 ### **Send_Heartbeat_Setup**
 
+!!! Note annotate "" 
+
+* Command ID: 30 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Heartbeat_Setup() <br />
+* Type of frame: REMOTE <br />
+* Length: 4 byte 
+
+Size (bytes) | Variable | Type 
+---- | ---- | ----
+0 - 3 | Heartbeat_rate_ms | int
+
+---
+
 ### **Send_Cyclic_command**
+
+**TODO**
+
+---
 
 ### **Send_Respond_Temperature**
 
+!!! Note annotate "" 
+
+* Command ID: 23 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_Temperature() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+---
+
+**Driver respond to this command with:**<br />
+
+* Command ID: 23 <br />
+* Direction: BLDC driver -> Host <br />
+* Python API reference: Send_Respond_Temperature() <br />
+* Type of frame: standard <br />
+* Length: 2 byte 
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
+---- | ---- | ----
+0 - 1 | temperature | 16 bit signed
+
+---
+
 ### **Send_Respond_Voltage**
+
+!!! Note annotate "" 
+
+* Command ID: 24 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_Voltage() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+---
+
+**Driver respond to this command with:**<br />
+
+* Command ID: 24 <br />
+* Direction: BLDC driver -> Host <br />
+* Python API reference: Send_Respond_Voltage() <br />
+* Type of frame: standard <br />
+* Length: 2 byte 
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
+---- | ---- | ----
+0 - 1 | voltage | 16 bit unsigned
+
+---
 
 ### **Send_Respond_Device_Info**
 
+!!! Note annotate "" 
+
+* Command ID: 25 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_Device_Info() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+**Driver respond to this command with:**<br />
+
+
+* Command ID: 25 <br />
+* Direction: BLDC driver -> Host <br />
+* Python API reference: Send_Respond_Device_Info() <br />
+* Type of frame: standard <br />
+* Length: 7 byte 
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
+---- | ---- | ----
+0  | HARDWARE_VERSION | byte
+1  | BATCH_DATE | byte
+2  | SOFTWARE_VERSION | byte
+3 - 6  | SERIAL_NUMBER | 32 bit
+
+---
+
 ### **Send_Respond_State_of_Errors**
+
+!!! Note annotate "" 
+
+* Command ID: 26 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_State_of_Errors() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+**Driver respond to this command with:**<br />
+
+* Command ID: 26 <br />
+* Direction: BLDC driver -> Host <br />
+* Python API reference: Send_Respond_State_of_Errors() <br />
+* Type of frame: standard <br />
+* Length: 2 byte 
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
+---- | ---- | ----
+0(bit 0) | error |  bit (0/1)
+0(bit 1) | temperature_error |  bit (0/1)
+0(bit 2) | encoder_error |  bit (0/1)
+0(bit 3) | vbus_error |  bit (0/1)
+0(bit 4) | driver_error |  bit (0/1)
+0(bit 5) | velocity_error |  bit (0/1)
+0(bit 6) | current_error |  bit (0/1)
+0(bit 7) | estop_error |  bit (0/1)
+1(bit 0) | calibrated |  bit (0/1)
+1(bit 0) | activated |  bit (0/1)
+1(bit 0) | watchdog_error |  bit (0/1)
+
+---
 
 ### **Send_Respond_Iq_data**
 
-### **Send_Respond_Encoder_data	**
+!!! Note annotate "" 
+
+* Command ID: 27 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_Iq_data() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+**Driver respond to this command with:**<br />
+
+* Command ID: 27 <br />
+* Direction: BLDC driver -> Host <br />
+* Python API reference: Send_Respond_Iq_data() <br />
+* Type of frame: standard <br />
+* Length: 2 byte 
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
+---- | ---- | ----
+0 - 1 | current | signed 16bit 
+
+---
+
+### **Send_Respond_Encoder_data**
+
+!!! Note annotate "" 
+
+* Command ID: 28 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_Encoder_data() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+**Driver respond to this command with:**<br />
+
+* Command ID: 28 <br />
+* Direction: BLDC driver -> Host <br />
+* Python API reference: Send_Respond_Encoder_data() <br />
+* Type of frame: standard <br />
+* Length: 8 byte 
+
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute) | Type 
+---- | ---- | ----
+0 - 3 | position | signed 32bit 
+4 - 7 | velocity | signed 32bit  
+
+---
 
 ### **Send_Respond_Ping**
 
+!!! Note annotate "" 
 
+* Command ID: 10 <br />
+* Direction: Host -> BLDC driver <br />
+* Python API reference: Send_Respond_Ping() <br />
+* Type of frame: REMOTE <br />
+* Length: 0 byte 
+
+**Driver respond to this command with:**<br />
+
+* Command ID: 10 <br />
+* Direction: BLDC driver -> Host<br />
+* Python API reference: Send_Respond_Ping() <br />
+* Type of frame: standard <br />
+* Length: 0 byte 
+
+!!! Note annotate "" 
+
+## **More about CAN**
+
+In CAN (Controller Area Network) communication, each byte of data within a CAN frame is transmitted as a sequence of bits. Each bit is transmitted serially, starting with the least significant bit (LSB) and ending with the most significant bit (MSB).<br />
+
+So, if you send a byte with the value 0b10110000, it will be transmitted over the CAN bus as follows:<br />
+
+* Start Bit: The start bit is transmitted first (LSB).<br />
+* Data Bits: The data bits are transmitted serially, starting with the LSB (bit[0] = 0) and ending with the MSB (bit[7] = 1).<br />
+
+Therefore, in the case of your byte 0b10110000, it will be transmitted as follows:<br />
+
+Start Bit | Data Bits (LSB first) <br />
+
+   0       |     0  0  0  0  1  1  0  1 <br />
+
+
+transmition of bytes is LSB byte first. So if we have data packet of 4 bytes; byte 3,2,1,0; byte 3 will be sent first and byte 0 last.<br />
+
+Data is packed in arrays so that for 16 bit number, 8 MSB bits go to array index 0 and 8 LSB bits go to array index 1.<br />
+When transmitting that data If you look here: https://en.wikipedia.org/wiki/CAN_bus LSB are sent first so array element with index 1 is transmitted first.<br />
+So if we have number that is 32814 decimal: MSB byte[0] = 1000 0000 , LSB byte[1] = 0101 1010 <br />
+It will be sent like this 0101 1010 0000 0001 <br />
+
+Transmitting floats is following the IEEE 754 floating-point format.<br />
+
+In IEEE 754 format, a single-precision floating-point number (float) is represented using 32 bits, with the following components:<br />
+
+Sign bit: 1 bit, representing the sign of the number.<br />
+Exponent bits: 8 bits, representing the exponent of the number.<br />
+Fraction bits: 23 bits, representing the fractional part of the number.<br />
+The function you provided interprets the input array of 4 bytes as a 32-bit integer and then uses a union to reinterpret those bits as a float. The bit manipulation <br />performed by shifting the bytes and combining them respects the layout of IEEE 754 floating-point numbers, assuming that the byte order of the system is big-endian.<br />
+
+Therefore, this function can be used to convert an array of 4 bytes representing a IEEE 754 float to its equivalent floating-point value.<br />

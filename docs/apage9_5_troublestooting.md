@@ -1,5 +1,7 @@
 # Troubleshooting
 
+!!! Note annotate "" 
+
 ## **LED indication**
 Normal operation | Calibration | Error mode 
 ---- | ---- | ----
@@ -27,6 +29,8 @@ For example your Vbus is 2V and you are getting Vbus error. You call #Clear but 
 
 Another example is your Vbus is 2V and you are getting Vbus error. You now adjust your Vbus voltage to 24V. Vbus error is now gone but the driver is still in error state. Calling #Clear will place it in normal operation.
 
+!!! Note annotate "" 
+
 ## **Having problems with your setup? Make sure to check these common problems:**
 
 1. Magnet and encoder too far or too close
@@ -40,6 +44,8 @@ Another example is your Vbus is 2V and you are getting Vbus error. You now adjus
 8. Is your encoder magnet aligned in the center of the pcb and does not wobble?
 9. If you motor is making crunching or whining sounds; place it in position control mode at any position and then use desired control mode.
 
+!!! Note annotate "" 
+
 ## **Magnet and encoder problems**
 
 * Recommended distance between encoder and the magnet is 1mm.
@@ -47,6 +53,7 @@ Another example is your Vbus is 2V and you are getting Vbus error. You now adjus
 * Magnet too close or touching the sensor of the spectral BLDC can brick and even destroy the mcu.
 * Magnet too far from the encoder will report invalid data from the encoder. 
 
+!!! Note annotate "" 
 
 ## **Low quality motors**
 
@@ -54,17 +61,20 @@ Another example is your Vbus is 2V and you are getting Vbus error. You now adjus
 * Bemf of the motor looks really bad and uneven
 * Resistance between phases differs a lot
 
+!!! Note annotate "" 
 
 ## **Motor temperature**
 
 * If termistor is not placed in motor windings your motor can overheat.
 * Overheating can reduce performance and destroy your motor windings and BLDC controller
 
+!!! Note annotate "" 
 
 ## **Calibration issuses**
 
 Check [calibration page]() for these issues.
 
+!!! Note annotate "" 
 
 ## **CAN bus issues**
 
@@ -72,6 +82,7 @@ Check [calibration page]() for these issues.
 * First and last node on the CAN bus should have termination resistors of 120ohm. To test that remove your device from any power and use multimeter to mesure resistance between CANH and CANL anywhere on the bus; it should be around 60 ohms.
 * Use twisted pair wires.
 
+!!! Note annotate "" 
 
 ## **UART issues**
 

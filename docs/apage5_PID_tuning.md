@@ -12,6 +12,9 @@ The process of tuning PID gains typically involves iterative adjustments, demand
 To tune PID loops you can use UART protocol or CAN protocol. We recommend UART and here we will showcase example commands for UART protocol.
 To tune the controller you will need to have it fully calibrated and without any active errors. Otherwise it will not allow you to enter any of the needed modes like: position, speed or current mode.
 
+
+!!! Note annotate "" 
+
 ## **Tuning cascade postion, velocty and current controller**
 
 <img src="../assets/cascadeloop.png" alt="drawing" width="1000"/> <br /> </p>
@@ -79,11 +82,13 @@ If you think you system is tuned:
 3. Based on real-world performance observations, adjust the gains as necessary to optimize the system's behavior and ensure consistent performance across different conditions.
 4. If you think you tuned your controller start to experiment with different speeds and see how it reacts and tracks them.
 
+!!! Note annotate "" 
+
 ## **Tuning impedance PD controller**
 
 <img src="../assets/PDloop.png" alt="drawing" width="1000"/> <br /> </p>
 
-TODO
+**TODO**
 
 ## **Velocity limits**
 

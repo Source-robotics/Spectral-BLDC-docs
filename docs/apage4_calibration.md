@@ -12,12 +12,15 @@ Spectral firmware has autocalibration feature that allows you to automatically d
     When calibrating the motor use 24V supply voltage for the best results! 
     Using smaller voltage may result in incorrect Resistance, inductance and kt and other parameters!
 
+!!! Note annotate "" 
+
 ## **Positive rotation**
 
 !!! Tip annotate "In spectral firmware positive rotation is always counter-clockwise. That means that positive current will result in rotation in that direction. Positive speed setpoint will rotate motor in that direction and rotating in that direction will increase motor positon!" 
 
 <p align="left"> <img src="../assets/Positive_rotation.png" alt="drawing" width="450"/> <br /> </p>
 
+!!! Note annotate "" 
 
 ## **Default calibration settings**
 Calibration default setting are:<br />
@@ -40,11 +43,15 @@ These generic parameters will work for motor with resistances ranging from 2 - 2
 
 Note that the values that Spectral drives calculate are only estimations and if you want to get exact values use high precision insturments to measure them.
 
+!!! Note annotate "" 
+
 ## **Calling calibration routine**
 
 Calibration routine can only be called from the UART interface. The command is:<br />
 
     #Cal
+
+!!! Note annotate "" 
 
 ## **Calibration routine output**
 
@@ -137,6 +144,8 @@ After the successful config is saved you dont need to re run calibration when yo
 !!! Danger annotate "False success!" 
     There is a known issue related to the encoder magnet's attachment to the motor rotor. If the magnet is not securely fastened and can slip or rotate freely, the motor may incorrectly report that the calibration process was successful when, in fact, it was not. To avoid this problem, it's crucial to ensure that the magnet is firmly secured to the motor rotor. Proper attachment of the magnet ensures the accuracy of the calibration process and prevents potential errors in motor operation.
 
+!!! Note annotate "" 
+
 ## **Troubleshooting**
 
 No magnet detected
@@ -158,3 +167,4 @@ Wrong phase order. Switch motor phases
     Calibration failed!
 
 
+If calibration is successful but your LED is in error mode and calling #Error reports no error try to call #Info command. If you see -1 somwhere that means that default config was no loaded and eeprom is filled with junk variables. To fix that call the #Default command.
