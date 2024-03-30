@@ -24,7 +24,7 @@ Some hardware considerations:
 * Distance between motor encoder and magnet should be around 1 mm.
 * Hole spacing of Spectral micro is 31 mm
 
-<p align="left"> <img src="../assets/mag_dist.PNG" alt="drawing" width="800"/> <br /> </p>
+<p align="left"> <img src="../assets/mag_dist.png" alt="drawing" width="800"/> <br /> </p>
 
 !!! Note annotate "" 
 
@@ -44,7 +44,7 @@ Some hardware considerations:
 !!! Danger annotate "**Cable orientation**" 
     **ALL cables used for dasiy chain (CAN and power) need to to follow orientation as shown on the image below! Failing to follow that will destroy your motor controller! All correct cables can be bought here: https://source-robotics.com/pages/connectors-and-cables** <br />
 
-<p align="left"> <img src="../assets/orientation.png" alt="drawing" width="700"/> <br /> </p> 
+<p align="left"> <img src="../assets/Orientation.png" alt="drawing" width="700"/> <br /> </p> 
 
 !!! Note annotate "" 
 
@@ -73,6 +73,7 @@ Thermistor needs to be placed inside the motor coils. You can usually do that th
 !!! Note annotate "" 
 
 ## **Status**
+
 Normal operation | Calibration | Error mode 
 ---- | ---- | ----
 3 short flashed and a pause <p align="left"> <img src="../assets/Normal.gif" alt="drawing" width="180"/> <br /> </p> | Flashing every 0.5 seconds <p align="left"> <img src="../assets/Calib.gif" alt="drawing" width="180"/> <br /> </p> | Solid LED, no flashing. <p align="left"> <img src="../assets/Error2.PNG" alt="drawing" width="180"/> <br /> </p>
@@ -92,4 +93,9 @@ If you have [spectral firmware](https://github.com/PCrnjak/Spectral-Micro-BLDC-c
     9. Watchdog error
 * **Calibration** will flash when in calibration routine
 
+## **What next?**
 
+* Flash the [latest firmware](https://github.com/PCrnjak/Spectral-Micro-BLDC-controller/tree/main/Spectral%20BLDC%20Firmware) to your driver (Note that drivers arrive with preflashed firmware)
+* You will need to [calibrate your motor](https://source-robotics.github.io/Spectral-BLDC-docs/apage4_calibration/)
+* [Tune your PID loops](https://source-robotics.github.io/Spectral-BLDC-docs/apage5_PID_tuning/)
+* Follow one of the guides or examples to start using Spectral driver
