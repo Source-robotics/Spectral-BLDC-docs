@@ -2,7 +2,7 @@
 
 !!! Note annotate "" 
 
-CAN bus should be your primary choice when developing robotic aplication. <br />
+**CAN bus** should be your primary choice when developing robotic aplication. <br />
 Spectral micro uses 5V CAN bus that adheres to the CAN 2.0 standard. Each Spectral micro has 2 CAN bus connectors allowing you to easily daisy chain multiple devices. 
 
 
@@ -21,8 +21,9 @@ Node with smallest Node ID is strongest in CAN bus arbitration.
 
 **If you want to learn more about CAN bus we recommend you read this [article!]()**
 
+**This page describes can protocol; Go to [CAN bus guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/CAN%20bus%20guide/) for hardware setup and examples** <br />
 **You can use our [Python CAN bus API](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main) to communicate with your Spectral BLDC controllers!** <br />
-**If you want a simple examples on how to write Python scripts to control your motor over CAN [check this guide!](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Python%20guide/)**
+**If you want to se more examples on how to write Python scripts to control your motor over CAN [check this guide!](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Python%20guide/)**
 
 !!! Note annotate "" 
 
