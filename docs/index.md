@@ -20,6 +20,7 @@
 **Guides**
 
 * [Arduino guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Arduino%20guide/)
+* [CAN bus guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/CAN%20bus%20guide/)
 * [Mobile robot guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Mobile%20robot%20guide/)
 * [Python guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Python%20guide/)
 * [ROS2 guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/ROS2%20guide/)
