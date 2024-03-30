@@ -113,6 +113,8 @@ In case your spectral BLDC sends any other data (as a response to command) it wi
 
 !!! Note annotate "" 
 
+This is the command that driver will send as its heartbeat every X ms. It is an empty data frame.<br />
+
 * Command ID: 9 <br />
 * Direction: BLDC driver -> host <br />
 * Python call: None, this command is sent only by driver <br />
@@ -125,17 +127,19 @@ In case your spectral BLDC sends any other data (as a response to command) it wi
 
 !!! Note annotate "" 
 
+This is the command that driver will send as a response to movement commands like Send_data_pack_1 and Send_data_pack_PD. <br />
+
 * Command ID: 3 <br />
 * Direction: BLDC driver -> host <br />
 * Python call: None, this command is sent only by driver <br />
 * Length: 8 byte<br />
 * Type of frame: standard <br />
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
----- | ---- | ---- 
-0 - 2 | position | signed 24bit 
-3 - 5 | velocity | signed 24bit  
-6 - 7 | current | signed 16bit  
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
+---- | ---- | ---- | ---- 
+0 - 2 | position | signed 24bit | unit is encoder ticks
+3 - 5 | velocity | signed 24bit  | unit is encoder ticks /s
+6 - 7 | current | signed 16bit  | unit is mA
 
 ---
 
@@ -153,6 +157,8 @@ Not used
 
 !!! Note annotate "" 
 
+This is the command that driver will send as a response to Send_gripper_data_pack. <br />
+
 * Command ID: 60 <br />
 * Direction: BLDC driver -> host <br />
 * Python call: None, this command is sent only by driver <br />
@@ -161,8 +167,8 @@ Not used
 
 Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
 ---- | ---- | ---- | ----
-0  | gripper_position | unsigned 8bit |
-1-2 | gripper_current |  16 bit signed |
+0  | gripper_position | unsigned 8bit | 255 fully closed, 0 fully open
+1-2 | gripper_current |  16 bit signed | 0 min current, 1300 max current, unit mA
 3(bit 0) | gripper_activated | bit (0/1) | gripper activate (1) / deactivated (0)
 3(bit 1) | gripper_action_status | bit (0/1) |  1 is goto, 0 is idle or performing auto release or in calibration
 3(bit 2 and 3) | gripper_object_detection | 2 bit | 0 in motion, 1 object detected closing, 2 object detected opening, 3 at positon
@@ -177,32 +183,33 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
 
 !!! Note annotate "" 
 
+This command will place the driver in position, speed or current control mode depending on the amount of paramters you give it.<br />
+Note that if you dont want feedforward just set it to 0. 
+
 * Command ID: 2 <br />
 * Direction: Host -> BLDC driver <br />
 * Python call: Send_data_pack_1() <br />
 * Type of frame: standard <br />
-* Length: 
+* Lenght: 8 byte -  If using positon setpoint with speed and current feedforward
 
-* 8 byte -  If using positon setpoint with speed and current feedforward
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0 - 2 | Position setpoint | signed 24bit | unit is encoder ticks
+3 - 5 | Velocity feedforward  | signed 24bit | unit is encoder ticks/s
+6 - 7 | Current feedforward | signed 16bit | unit is mA
 
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0 - 2 | Position | signed 24bit 
-3 - 5 | Velocity | signed 24bit  
-6 - 7 | Current | signed 16bit  
+* Lenght: 5 byte -  If using speed setpoint and current feedforward
 
-* 5 byte -  If using speed setpoint and current feedforward
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0 - 2 | Velocity setpoint | signed 24bit | unit is encoder ticks/s
+3 - 5 | Current feedforward| signed 16bit | unit is mA
 
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0 - 2 | Velocity | signed 24bit  
-3 - 5 | Current | signed 16bit  
+* Lenght: 2 byte -  If using current setpoint
 
-* 2 byte -  If using current setpoint
-
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0 - 2 | Current | signed 16bit 
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0 - 1 | Current setpoint| signed 16bit | unit is mA
 
 Driver will respons to this command with:<br />
 **Respond_data_pack_1**
@@ -223,17 +230,19 @@ Not used
 
 !!! Note annotate "" 
 
+This command will place the driver in impedance PD control mode. 
+
 * Command ID: 4 <br />
 * Direction: Host -> BLDC driver <br />
 * Python call: Send_data_pack_PD() <br />
 * Type of frame: standard <br />
 * Length: 8 byte 
 
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0 - 2 | Position | signed 24bit 
-3 - 5 | Velocity | signed 24bit  
-6 - 7 | Current | signed 16bit  
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0 - 2 | Position | signed 24bit | unit is encoder ticks
+3 - 5 | Velocity | signed 24bit | unit is encoder ticks/s
+6 - 7 | Current | signed 16bit  | unit is mA
 
 Driver will respond to this command with:<br />
 **Respond_data_pack_1**
@@ -244,26 +253,29 @@ Driver will respond to this command with:<br />
 
 !!! Note annotate "" 
 
+This command will command the motor (SSG48 gripper) to move to specific position with speed/torque.
+
 * Command ID: 61 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_gripper_data_pack() <br />
 * Type of frame: standard <br />
 * Length: 5 byte 
 
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0  | Position | unsigned 8bit
-1 | Velocity | unsigned 8bit
-2-3 | Current | signed 16bit  
-4(bit 0)  | Gripper activate |  bit (0/1)
-4(bit 1)  | Gripper action status |  bit (0/1)
-4(bit 2)  | Gripper estop status |  bit (0/1)
-4(bit 3)  | Gripper release direction |  bit (0/1)
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0  | Position | unsigned 8bit | 0 fully open, 255 fully closed
+1 | Velocity | unsigned 8bit | 0 min speed, 255 max speed
+2-3 | Current | signed 16bit | 0 min current, 1300 max current, unit mA
+4(bit 0)  | Gripper activate |  bit (0/1) | 0 deactivate the gripper, 1 activate the gripper
+4(bit 1)  | Gripper action status |  bit (0/1) | 
+4(bit 2)  | Gripper estop status |  bit (0/1) |
+4(bit 3)  | Gripper release direction |  bit (0/1) |
 
+ 
 Driver will respond to this command with:<br />
 **Respond_Gripper_data_pack**
 
-Alternatively you can send empty Send_gripper_data_pack command
+Alternatively you can send empty Send_gripper_data_pack command.
 
 * Command ID: 61 <br />
 * Direction: Host -> BLDC driver <br />
@@ -280,6 +292,8 @@ Driver will respons to this command with:<br />
 
 !!! Note annotate "" 
 
+This command will start gripper calibration. It is an empty data frame.
+
 * Command ID: 62 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_gripper_calibrate() <br />
@@ -293,6 +307,8 @@ Driver will respons to this command with:<br />
 ### **Send_PD_Gains**
 
 !!! Note annotate "" 
+
+This command will set KP and KD gains for the PD impedance loop.
 
 * Command ID: 16 <br />
 * Direction: Host -> BLDC driver <br />
@@ -313,6 +329,8 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will set Ki and Kp PI parameters for the PI current control loop.
+
 * Command ID: 17 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Current_Gains() <br />
@@ -331,6 +349,8 @@ Size (bytes) | Variable | Type
 ### **Send_Velocity_Gains**
 
 !!! Note annotate "" 
+
+This command will set Ki and Kp PI parameters for the PI speed/velocity control loop.
 
 * Command ID: 18 <br />
 * Direction: Host -> BLDC driver <br />
@@ -351,6 +371,8 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will set Kp P parameter for the P position control loop.
+
 * Command ID: 19 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Position_Gains() <br />
@@ -369,16 +391,19 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will set velocity/speed and current limits.<br />
+This will limit max speed and current that can be reached during motor operation.
+
 * Command ID: 20 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Limits() <br />
 * Type of frame: standard <br />
 * Length: 8 byte 
 
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0 - 3 | Velocity limit | float 32
-3 - 7 | Current limit | float 32 
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0 - 3 | Velocity limit | float 32 | unit is encoder ticks/s
+3 - 7 | Current limit | float 32 | unit is mA
 
 **Driver will not respond to this command!**<br />
 
@@ -387,6 +412,8 @@ Size (bytes) | Variable | Type
 ### **Send_Kt**
 
 !!! Note annotate "" 
+
+This command will set Kt of the motor driver.
 
 * Command ID: 22 <br />
 * Direction: Host -> BLDC driver <br />
@@ -407,6 +434,9 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will set a new CAN ID for your motor driver. <br />
+Note that ID you send is the new motor ID.
+
 * Command ID: 11 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_CAN_ID() <br />
@@ -425,6 +455,9 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will stop the motor and set ESTOP error to 1.<br />
+ It is an empty data frame.
+
 * Command ID: 0 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_ESTOP() <br />
@@ -438,6 +471,9 @@ Size (bytes) | Variable | Type
 ### **Send_Idle**
 
 !!! Note annotate "" 
+
+This command will set the motor driver to idle state. <br />
+It is an empty data frame.
 
 * Command ID: 12 <br />
 * Direction: Host -> BLDC driver <br />
@@ -453,6 +489,9 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will save the current motor config to the EEPROM.<br />
+ It is an empty data frame.
+
 * Command ID: 13 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Save_config() <br />
@@ -466,6 +505,9 @@ Size (bytes) | Variable | Type
 ### **Send_Reset**
 
 !!! Note annotate "" 
+
+This command will reset the MCU of the motor driver.<br /> 
+It is an empty data frame.
 
 * Command ID: 14 <br />
 * Direction: Host -> BLDC driver <br />
@@ -481,6 +523,9 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will clear all active errors of the motor driver. <br />
+It is an empty data frame.
+
 * Command ID: 1 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Clear_Error() <br />
@@ -495,22 +540,26 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will set Watchdog parameters like watchdog time and action.
+
 * Command ID: 15 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Watchdog() <br />
 * Type of frame: REMOTE <br />
 * Length: 5 byte 
 
-Size (bytes) | Variable | Type 
----- | ---- | ----
-0 - 3 | watchdog_time_ms | int
-4  | Action | int
+Size (bytes) | Variable | Type | Details
+---- | ---- | ---- | ----
+0 - 3 | watchdog_time_ms | int | 
+4  | Action | int | *Not implemented
 
 ---
 
 ### **Send_Heartbeat_Setup**
 
 !!! Note annotate "" 
+
+This command will set heartbeat paramters of the motor driver.
 
 * Command ID: 30 <br />
 * Direction: Host -> BLDC driver <br />
@@ -534,13 +583,14 @@ Size (bytes) | Variable | Type
 
 !!! Note annotate "" 
 
+This command will request that motor driver responds with its current temperature. (Temperature of the thermistor).
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
+
 * Command ID: 23 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Respond_Temperature() <br />
 * Type of frame: REMOTE <br />
 * Length: 0 byte 
-
----
 
 **Driver respond to this command with:**<br />
 
@@ -550,9 +600,9 @@ Size (bytes) | Variable | Type
 * Type of frame: standard <br />
 * Length: 2 byte 
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
----- | ---- | ----
-0 - 1 | temperature | 16 bit signed
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
+---- | ---- | ---- | ----
+0 - 1 | temperature | 16 bit signed | unit of degrees
 
 ---
 
@@ -560,13 +610,14 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 
 !!! Note annotate "" 
 
+This command will request that motor driver responds with its current supply voltage.
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
+
 * Command ID: 24 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Respond_Voltage() <br />
 * Type of frame: REMOTE <br />
 * Length: 0 byte 
-
----
 
 **Driver respond to this command with:**<br />
 
@@ -576,9 +627,9 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 * Type of frame: standard <br />
 * Length: 2 byte 
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
----- | ---- | ----
-0 - 1 | voltage | 16 bit unsigned
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
+---- | ---- | ---- | ----
+0 - 1 | voltage | 16 bit unsigned | unit of mV
 
 ---
 
@@ -586,6 +637,9 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 
 !!! Note annotate "" 
 
+This command will request that motor driver responds with its version information saved in the EEPROM. 
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
+
 * Command ID: 25 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Respond_Device_Info() <br />
@@ -594,25 +648,27 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 
 **Driver respond to this command with:**<br />
 
-
 * Command ID: 25 <br />
 * Direction: BLDC driver -> Host <br />
 * Python API reference: Send_Respond_Device_Info() <br />
 * Type of frame: standard <br />
 * Length: 7 byte 
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
----- | ---- | ----
-0  | HARDWARE_VERSION | byte
-1  | BATCH_DATE | byte
-2  | SOFTWARE_VERSION | byte
-3 - 6  | SERIAL_NUMBER | 32 bit
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
+---- | ---- | ---- | ----
+0  | HARDWARE_VERSION | byte | harware version of the driver
+1  | BATCH_DATE | byte | date when the batch was produced
+2  | SOFTWARE_VERSION | byte | version of the software on the driver
+3 - 6  | SERIAL_NUMBER | 32 bit | serial number of the driver
 
 ---
 
 ### **Send_Respond_State_of_Errors**
 
 !!! Note annotate "" 
+
+This command will request that motor driver responds with state of all possible errors.
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
 
 * Command ID: 26 <br />
 * Direction: Host -> BLDC driver <br />
@@ -628,9 +684,9 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 * Type of frame: standard <br />
 * Length: 2 byte 
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
----- | ---- | ----
-0(bit 0) | error |  bit (0/1)
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type  | Details
+---- | ---- | ---- | ----
+0(bit 0) | error |  bit (0/1) | General error
 0(bit 1) | temperature_error |  bit (0/1)
 0(bit 2) | encoder_error |  bit (0/1)
 0(bit 3) | vbus_error |  bit (0/1)
@@ -648,6 +704,9 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 
 !!! Note annotate "" 
 
+This command will request that motor driver responds with current Iq current data.
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
+
 * Command ID: 27 <br />
 * Direction: Host -> BLDC driver <br />
 * Python API reference: Send_Respond_Iq_data() <br />
@@ -662,15 +721,18 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 * Type of frame: standard <br />
 * Length: 2 byte 
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type 
----- | ---- | ----
-0 - 1 | current | signed 16bit 
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
+---- | ---- | ---- | ----
+0 - 1 | current | signed 16bit | unit is mA
 
 ---
 
 ### **Send_Respond_Encoder_data**
 
 !!! Note annotate "" 
+
+This command will request that motor driver responds with current encoder position and speed data.
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
 
 * Command ID: 28 <br />
 * Direction: Host -> BLDC driver <br />
@@ -686,16 +748,19 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type
 * Type of frame: standard <br />
 * Length: 8 byte 
 
-Size (bytes) | Variable (Spectral_BLDC Lib python attribute) | Type 
----- | ---- | ----
-0 - 3 | position | signed 32bit 
-4 - 7 | velocity | signed 32bit  
+Size (bytes) | Variable (Spectral_BLDC Lib python attribute) | Type | Details
+---- | ---- | ---- | ----
+0 - 3 | position | signed 32bit | unit is encoder ticks
+4 - 7 | velocity | signed 32bit | unit is encoder ticks/s
 
 ---
 
 ### **Send_Respond_Ping**
 
 !!! Note annotate "" 
+
+This command will request that motor driver responds with its own ping. 
+ <br /> Direction host -> driver is remote frame and direction driver -> host is standard data frame.
 
 * Command ID: 10 <br />
 * Direction: Host -> BLDC driver <br />
