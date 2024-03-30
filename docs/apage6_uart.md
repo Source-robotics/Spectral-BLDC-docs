@@ -11,6 +11,8 @@ Disadvantages:
 
 Default baud rate is: 256000 (Max tested baudrate is 1000 0000)
 
+!!! Note annotate "" 
+
 ## **How to connect**
 * TODO how to connect to serial adapter
 
@@ -21,6 +23,8 @@ Default baud rate is: 256000 (Max tested baudrate is 1000 0000)
 
 !!! Note annotate "UART pins" 
     Take note that UART is connected TX to RX and RX to TX
+
+!!! Note annotate "" 
 
 ## **Using serial monitor**
 
@@ -50,12 +54,13 @@ Default baud rate is: 256000 (Max tested baudrate is 1000 0000)
     **Download Arduino from this link: [Arduino](https://www.arduino.cc/en/software)**
 
     Select matching COM port of your serial adapter
-    <p align="left"> <img src="../assets/ARDUINO1.PNG" alt="drawing" width="500"/> <br /> </p>
+    <p align="left"> <img src="../assets/Arduino1.PNG" alt="drawing" width="500"/> <br /> </p>
     For boards we usually select "Adafruit Circuit Playground"
-    <p align="left"> <img src="../assets/ARDUINO2.PNG" alt="drawing" width="500"/> <br /> </p>
+    <p align="left"> <img src="../assets/Arduino2.PNG" alt="drawing" width="500"/> <br /> </p>
     In tools tab press Serial monitor
-    <p align="left"> <img src="../assets/ARDUINO3.PNG" alt="drawing" width="500"/> <br /> </p>
+    <p align="left"> <img src="../assets/Arduino3.PNG" alt="drawing" width="500"/> <br /> </p>
 
+!!! Note annotate "" 
 
 ## **UART protocol**
 
@@ -105,6 +110,7 @@ There are few cyclic commands available. they initiate a motor to send data ever
 1. `Cyc`
 2. `Cyca`
 
+!!! Note annotate "" 
 
 ## **List of commands**
 
@@ -209,7 +215,7 @@ Commands used when in gripper mode. Procedure:
 `Gripinfo` | Action |  | `Print information about this gripper` | All information about gripper like: is it calibrated, status, endstop values...
 
 
-
+!!! Note annotate "" 
 
 ## **Cyclic commands**
 TODO
