@@ -143,16 +143,6 @@ Size (bytes) | Variable (Spectral_BLDC Lib python attribute)  | Type | Details
 
 ---
 
-### **Respond_data_pack_2**
-Not used 
-
----
-
-### **Respond_data_pack_3**
-Not used 
-
----
-
 ### **Respond_Gripper_data_pack**
 
 !!! Note annotate "" 
@@ -213,16 +203,6 @@ Size (bytes) | Variable | Type | Details
 
 Driver will respons to this command with:<br />
 **Respond_data_pack_1**
-
----
-
-### **Send_data_pack_2**
-Not used 
-
----
-
-### **Send_data_pack_3**
-Not used 
 
 ---
 

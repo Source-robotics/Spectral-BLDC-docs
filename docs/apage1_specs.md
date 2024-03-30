@@ -70,7 +70,7 @@ Spectral micro uses same hole spacing as NEMA17 format motors.
 ## **CAN termination**
 
 To use CAN termination make sure to place the swith in **ON** position!
-<p align="left"> <img src="../assets/TERM.PNG" alt="drawing" width="600"/> <br /> </p>
+<p align="left"> <img src="../assets/TERM.png" alt="drawing" width="600"/> <br /> </p>
 
 
 
