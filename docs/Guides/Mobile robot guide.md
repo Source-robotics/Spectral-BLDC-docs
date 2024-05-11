@@ -7,42 +7,89 @@ More info on the robot and the code coming soon!
 
 
 ``` py title="Spectral_mobile_robot_xbox.py"
-import Spectral_BLDC as Spectral
+from inputs import get_gamepad
+import math
+import threading
 import time
+import Spectral_BLDC as Spectral
 
-# Init comms channel 
-Communication1 = Spectral.CanCommunication(bustype='slcan', channel='COM41', bitrate=1000000)
-# Init motor object
-Motor1 = Spectral.SpectralCAN(node_id=0, communication=Communication1)
 
-while True:
+Communication1 = Spectral.CanCommunication(bustype='slcan', channel='COM3', bitrate=1000000)
+Motor = []
 
-    # Send this msg to the motor controller, it will respond with position and speed data
-    Motor1.Send_Respond_Encoder_data()
+# We are using 2 motors with IDs 0 and 1
+Motor.append(Spectral.SpectralCAN(node_id=0, communication=Communication1))
+Motor.append(Spectral.SpectralCAN(node_id=1, communication=Communication1))
 
-    # Get CAN msg, timeout tells us to continue if there is no msg after in this case 0.2 s
-    message, UnpackedMessageID = Communication1.receive_can_messages(timeout=0.2) 
 
-    # If there was a msg unpack it
-    if message is not None:
-        print(f"Message is: {message}")
-        print(f"Node ID is : {UnpackedMessageID.node_id}")
-        print(f"Message ID is: {UnpackedMessageID.command_id}")
-        print(f"Error bit is: {UnpackedMessageID.error_bit}")
-        print(f"Message length is: {message.dlc}")
-        print(f"Is is remote frame: {message.is_remote_frame}")
-        print(f"Timestamp is: {message.timestamp}")
+timeout_setting = 0.00005
+
+MAX_JOY_VAL = math.pow(2, 15)
+DEADBAND_THRESHOLD = 0.1
+
+# Read xbox controller and output left joystick x and y positions
+def read_left_joystick():
+    left_joystick_x = 0
+    left_joystick_y = 0
+    
+    def monitor_left_joystick():
+        nonlocal left_joystick_x, left_joystick_y
+        while True:
+            events = get_gamepad()
+            for event in events:
+                if event.code == 'ABS_Y':
+                    left_joystick_y = event.state / MAX_JOY_VAL  # normalize between -1 and 1
+                elif event.code == 'ABS_X':
+                    left_joystick_x = event.state / MAX_JOY_VAL  # normalize between -1 and 1
+
+
+                  # Apply deadband
+                if abs(left_joystick_x) < DEADBAND_THRESHOLD:
+                    left_joystick_x = 0
+                if abs(left_joystick_y) < DEADBAND_THRESHOLD:
+                    left_joystick_y = 0
+
+    monitor_thread = threading.Thread(target=monitor_left_joystick)
+    monitor_thread.daemon = True
+    monitor_thread.start()
+
+    while True:
+        yield left_joystick_x, left_joystick_y
+
+# Robot control 
+def control_robot():
+    for x, y in read_left_joystick():
+        # Assuming the robot has two wheels and speed can be controlled independently
+        left_wheel_speed = y + x
+        right_wheel_speed = y - x
         
-        # Here we unpack the data from the packet
-        Motor1.UnpackData(message,UnpackedMessageID)
-        # We are interested in position and speed data that was requested by calling Send_Respond_Encoder_data
-        print(f"Motor position is: {Motor1.position}")
-        print(f"Motor speed is: {Motor1.speed}")
+        # Limit the speed between -1 and 1
+        left_wheel_speed = max(min(left_wheel_speed, 1), -1)
+        right_wheel_speed = max(min(right_wheel_speed, 1), -1)
+        
+        # Use the calculated speeds to control the robot's wheels        
+        print("Left Wheel Speed:", left_wheel_speed)
+        print("Right Wheel Speed:", right_wheel_speed)
 
 
-    else:
-        print("No message after timeout period!")
-    print("")
-    time.sleep(1 )
-```
+        # Send data to all motors
+        Motor[0].Send_data_pack_1(None,int(left_wheel_speed * 1000000),0)
+        Motor[1].Send_data_pack_1(None,int(right_wheel_speed * -1000000),0)
+
+        for i in range(1, 4):  # Loop 9-1=8 to check for received data
+            message, UnpackedMessageID = Communication1.receive_can_messages(timeout=timeout_setting)
+            print(f"unpack{i} is: {UnpackedMessageID}")
+
+            # Check if UnpackedMessageID is not None 
+            if UnpackedMessageID is not None:
+                
+                Motor[UnpackedMessageID[0]].UnpackData(message,UnpackedMessageID)
+                print(f"Motor {UnpackedMessageID[0]}, speed is: {Motor[UnpackedMessageID[0]].speed}")
+
+
+        time.sleep(0.05)
+
+if __name__ == '__main__':
+    control_robot()
+
 ```
