@@ -2,6 +2,9 @@
 
 A really simple example where you can control mobile robot based on spectral micro BLDC drives using xbox controller!
 
+More info on the robot and the code coming soon!
+
+
 
 ``` py title="Spectral_mobile_robot_xbox.py"
 import Spectral_BLDC as Spectral
