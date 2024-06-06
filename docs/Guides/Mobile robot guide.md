@@ -1,9 +1,22 @@
+# Mobile robot guide
 
 
-A really simple example where you can control mobile robot based on spectral micro BLDC drives using xbox controller!
+# **Intro**
+A really simple example where you can control mobile robot based on spectral micro BLDC drives using xbox controller! <br />
 
-More info on the robot and the code coming soon!
+What you will need to create this simple mobile robot is:
 
+* 2 x spectral micro BLDC - used for 2 wheels 
+* 2 x BLDC motors
+* 1 x CAN adapter
+* 1 x Drill battery adapter: [Example](https://s.click.aliexpress.com/e/_DExmYtl) - This is gread way to power your BLDC motors with cheap and affortable batteries
+* A Laptop or raspberry pi
+
+# **Setup**
+
+<p align="left"> <img src="../assets/AMR_setup.PNG" alt="drawing" width="700"/> <br /> </p>
+
+The setup will be the same for any kind of mobile robot. You will needto follow the following diagram to setup your robot.
 
 
 ``` py title="Spectral_mobile_robot_xbox.py"
