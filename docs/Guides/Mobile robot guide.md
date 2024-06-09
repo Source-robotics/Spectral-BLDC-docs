@@ -1,22 +1,38 @@
 # Mobile robot guide
 
 
-# **Intro**
-A really simple example where you can control mobile robot based on spectral micro BLDC drives using xbox controller! <br />
+## **Intro**
+This guide is a really simple example on how you can control mobile robot based on spectral micro BLDC drives using xbox controller! <br />
 
-What you will need to create this simple mobile robot is:
+!!! Tip annotate "Python API" 
+    This guide leverages [Spectral BLDC python API](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main)
+
+What you will need to create a simple mobile robot is:
 
 * 2 x spectral micro BLDC - used for 2 wheels 
+* Wires to connect everything up: [CAN wires](https://source-robotics.com/products/spectral-micro-can-cable), [Power wires](https://source-robotics.com/products/spectral-micro-power-cable)
 * 2 x BLDC motors
 * 1 x CAN adapter
-* 1 x Drill battery adapter: [Example](https://s.click.aliexpress.com/e/_DExmYtl) - This is gread way to power your BLDC motors with cheap and affortable batteries
+* 1 x Drill battery adapter: [Example](https://s.click.aliexpress.com/e/_DExmYtl) - This is great way to power your BLDC motors with cheap and affortable batteries
 * A Laptop or raspberry pi
+* Xbox controller
 
-# **Setup**
+!!! Note annotate "Building the robot" 
+    In this guide we only recommend you the hardware you can use to build the robot you designed. We do not offer already made designs you can build!
+
+## **Setup**
 
 <p align="left"> <img src="../assets/AMR_setup.PNG" alt="drawing" width="700"/> <br /> </p>
 
-The setup will be the same for any kind of mobile robot. You will needto follow the following diagram to setup your robot.
+The setup will be the same for any kind of mobile robot. You will need to follow the  diagram above to wire everything up.
+
+* Firstly you need to calibrate your Spectral BLDC drivers with the motors you are using. 
+* After that change the CAN ids of one of the drivers to CAN 1. You can do it by using UART commands: #CANID 1 and after that #Save
+* Now connect CAN adapters CAN bus to one of the drivers and then from that driver connect to the second driver. Make sure that last driver in chain has its CAN termination resistor in "ON" state
+* Connect the power to both drivers. You can daisy chain it or use 2 seperate wires.
+* You will also need to connect your xbox controller to the PC/laptop via Bluetooth.
+
+The code below is really simple example that drives the robot using the left joystick of the controller.
 
 
 ``` py title="Spectral_mobile_robot_xbox.py"
