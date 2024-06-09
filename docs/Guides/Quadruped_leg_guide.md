@@ -1,8 +1,12 @@
 # Robot leg guide
 
-
+https://github.com/PCrnjak/Source-Robotics-Toolbox
 ## **Intro**
 In this quide we wil show you how you can control a leg of any quadruped robot using Spectral micro BLDC drivers. <br />If you can control one of them you can control all the rest! <br />
+
+!!! Tip annotate "Python API and toolbox" 
+    This guide leverages [Spectral BLDC python API](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main) and [Source robotics toolbox](https://github.com/PCrnjak/Source-Robotics-Toolbox)
+
 
 <p align="left"> <img src="../assets/LEG.jpg" alt="drawing" width="800"/> <br /> </p>
 
