@@ -1,6 +1,5 @@
 # Robot leg guide
 
-https://github.com/PCrnjak/Source-Robotics-Toolbox
 ## **Intro**
 In this quide we wil show you how you can control a leg of any quadruped robot using Spectral micro BLDC drivers. <br />If you can control one of them you can control all the rest! <br />
 
@@ -30,9 +29,9 @@ What you will make a simple 2 DOF leg:
 
 <p align="left"> <img src="../assets/leg_setup.png" alt="drawing" width="800"/> <br /> </p>
 
-The setup will be the same for any kind of mobile robot. You will need to follow the  diagram above to wire everything up.
+The setup will be the same for any kind of qadruped leg. You will need to follow the diagram above to wire everything up.
 
-* Firstly you need to calibrate your Spectral BLDC drivers with the motors you are using. 
+* First you need to calibrate your Spectral BLDC drivers with the motors you are using. 
 * After that change the CAN ids of one of the drivers to CAN 1. You can do it by using UART commands: #CANID 1 and after that #Save
 * Now connect CAN adapters CAN bus to one of the drivers and then from that driver connect to the second driver. Make sure that last driver in chain has its CAN termination resistor in "ON" state
 * Connect the power to both drivers. (Use daisy chain)
@@ -61,3 +60,12 @@ We defined that trajectory with our function xx and with parameters:
 * 
 *
 <p align="left"> <img src="../assets/circ_2.png" alt="drawing" width="800"/> <br /> </p>
+
+How precise you follow the trajectory depends on the speed you set. With low speeds you can track the circle perflectly. With larger speeds the system cant keep up and overshoots. This is due multiple reaseons like:
+
+* Inertia and Momentum: At higher speeds, the inertia and momentum of the robot leg increase, making it harder to change directions quickly and accurately.
+* Centrifugal and Coriolis Forces
+* Trajectory Planning and Execution - at higher speeds our trajectory has less points to create a full circle. This is due a fixed rate we send data to our motors eg. every 20ms. 
+* Feedforward Control: Lack of proper feedforward control can lead to errors in trajectory tracking, as the controller might not anticipate the required accelerations and decelerations.
+
+You can see that from the example with speed set to 1 and 3.
