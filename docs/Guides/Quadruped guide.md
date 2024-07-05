@@ -28,6 +28,8 @@ What you will need:
 
 <p align="left"> <img src="../assets/leg_setup.png" alt="drawing" width="800"/> <br /> </p>
 
+![drawing](../assets/leg_setup.png)
+
 The setup will be the same for any kind of quadruped leg. You will need to follow the diagram above to wire everything up.
 
 * First you need to calibrate your Spectral BLDC drivers with the motors you are using. 
