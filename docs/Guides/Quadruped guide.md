@@ -7,7 +7,7 @@ In this quide we wil show you how you can control a leg of any quadruped robot u
     This guide leverages [Spectral BLDC python API](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main) and [Source robotics toolbox](https://github.com/PCrnjak/Source-Robotics-Toolbox)
 
 
-<p align="left"> <img src="../assets/LEG.jpg" alt="drawing" width="800"/> <br /> </p>
+![drawing](../assets/LEG.jpg)
 
 !!! Note annotate "Building the LEG" 
     In this guide we only recommend you the hardware you can use to build the robot you designed. We do not offer already made designs you can build!
@@ -26,8 +26,6 @@ What you will need:
 * 1 x 24V power supply
 * A Laptop or raspberry pi
 
-<p align="left"> <img src="../assets/leg_setup.png" alt="drawing" width="800"/> <br /> </p>
-
 ![drawing](../assets/leg_setup.png)
 
 The setup will be the same for any kind of quadruped leg. You will need to follow the diagram above to wire everything up.
@@ -39,7 +37,9 @@ The setup will be the same for any kind of quadruped leg. You will need to follo
 
 ## Leg kinematics
 
-<p align="left"> <img src="../assets/robot_leg_dh_table.png" alt="drawing" width="800"/> <br /> </p>
+
+![drawing](../assets/robot_leg_dh_table.png)
+
 
 First you will need to assign coordinate frames to your leg model.
 We already did it but if you want to learn more on how and why check this [Link](https://automaticaddison.com/how-to-assign-denavit-hartenberg-frames-to-robotic-arms/)<br />
@@ -52,7 +52,8 @@ value l1 is 0.112 meters and value l2 is 0.1 meters. The frame 2 is the end / fo
 
 Before running the main code lets check if the comms are working and get initial position values of our robot leg. This code will try to get data from the 2 motors of our robot leg. We are most interested in positon data of those 2 motors. Position the leg like shown in this image. Run the leg_calib code and write down position values of each motor. 
 
-<p align="left"> <img src="../assets/leg.PNG" alt="drawing" width="800"/> <br /> </p>
+
+![drawing](../assets/leg.PNG)
 
 
 ``` py title="leg_calib.py"
@@ -120,7 +121,9 @@ We defined that trajectory with our function generate_circle_coords and with par
 * speed - Speed of the end-effector in meters per second
 * time_var - Elapsed time in seconds
 
-<p align="left"> <img src="../assets/circ_2.png" alt="drawing" width="800"/> <br /> </p>
+
+![drawing](../assets/circ_2.png)
+
 
 How precise you follow the trajectory depends on the speed you set. With low speeds you can track the circle perflectly. With larger speeds the system cant keep up and overshoots. This is due multiple reaseons like:
 
