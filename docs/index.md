@@ -26,5 +26,6 @@
 * [ROS2 guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/ROS2%20guide/)
 * [Serial terminal guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/UART%20communication%20guide/)
 * [Simple robot arm guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Simple%20robot%20arm%20guide/)
+* [Quadruped leg guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Quadruped%20leg%20guide/)
 * [SimpleFOC guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/SIMPLEFOC%20guide/)
 

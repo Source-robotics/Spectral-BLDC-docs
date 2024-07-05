@@ -21,5 +21,4 @@ Motor | Name | Specifications | Link
 .<p align="left"> <img src="../assets/GM6008H.PNG" alt="drawing" width="180"/> <br /> </p> |GM6008H|Pole pairs: 21 <br /> Weight: 219 g  <br /> Phase to phase Resistance: 9.3 ohm <br /> KV:|[Link](https://s.click.aliexpress.com/e/_DDPsXZn)
 .<p align="left"> <img src="../assets/GBM5010.PNG" alt="drawing" width="180"/> <br /> </p> |GBM5010|Pole pairs: 21 <br /> Weight: 219 g  <br /> Phase to phase Resistance: 9.3 ohm <br /> KV:|[Link](https://s.click.aliexpress.com/e/_DlJ8vJb)
 .<p align="left"> <img src="../assets/2804_100kv.PNG" alt="drawing" width="180"/> <br /> </p> |2804 100KV|Pole pairs: 21 <br /> Weight: 219 g  <br /> Phase to phase Resistance: 9.3 ohm <br /> KV:|[Link](https://s.click.aliexpress.com/e/_DdeNXK1)
-.<p align="left"> <img src="../assets/GIM4305.PNG" alt="drawing" width="180"/> <br /> </p> |GIM4305| Works poorly, too low resistance  <br /> Pole pairs: 14 <br /> Weight: 219 g  <br /> Phase to phase Resistance: 9.3 ohm <br /> KV:|[Link](https://s.click.aliexpress.com/e/_DdshnUz)
 

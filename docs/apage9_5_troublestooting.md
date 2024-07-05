@@ -38,11 +38,12 @@ Another example is your Vbus is 2V and you are getting Vbus error. You now adjus
 3. You have too big or too small velocity and current limits
 4. You hear crunching and whining sounds. Tune your PIDs especially current loop. Try to lower the current loop bandwidth during calibration
 5. You hear crunching and whining sounds. Your current limit might be too high, lower it.
-5. Are you motor phases in short or open circuit?
-6. Do you have a current limit set on your power supply?
-7. Is your CAN bus correctly terminated?
-8. Is your encoder magnet aligned in the center of the pcb and does not wobble?
-9. If you motor is making crunching or whining sounds; place it in position control mode at any position and then use desired control mode.
+6. Are you motor phases in short or open circuit?
+7. Do you have a current limit set on your power supply?
+8. Is your CAN bus correctly terminated?
+9. Is your encoder magnet aligned in the center of the pcb and does not wobble?
+10. Is your motor compatible with the motor driver?
+ 
 
 !!! Note annotate "" 
 
@@ -67,6 +68,13 @@ Another example is your Vbus is 2V and you are getting Vbus error. You now adjus
 
 * If termistor is not placed in motor windings your motor can overheat.
 * Overheating can reduce performance and destroy your motor windings and BLDC controller
+
+!!! Note annotate "" 
+
+
+## **Driver temperature**
+
+If driver gets over some temperature it will automatically shut down. This is hardware feture of the hardware chip we use and cant be modified in software. 
 
 !!! Note annotate "" 
 
