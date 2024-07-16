@@ -6,6 +6,8 @@ Bilateral teleoperation is a concept that Involves two-way communication where b
 
 The two grippers are virtually coupled to each other, allowing either to act as the master (the haptic interface) or the slave (the manipulator) in the system. We are not using a force sensor at the grippers but are relying on proprioception.
 
+![drawing](../assets/bil_tel.png)
+
 Watch these example videos to get a "feel" of the concept:
 
 - [Gripper bilateral](https://www.youtube.com/watch?v=8jfgFuEFNdI) 
@@ -19,7 +21,7 @@ These kind of setup is perfect for: Teleoperation, Imitation learning, Virtual E
 ## **The algorithm**
 The magic of this setup is done with these 2 simple formulas.
 
- we got them from amazing Ben Katz paper, creator of mini cheetah quad: [Link to the paper](https://dspace.mit.edu/handle/1721.1/118671?show=full)
+ We got them from amazing Ben Katz paper, creator of mini cheetah quad: [Link to the paper](https://dspace.mit.edu/handle/1721.1/118671?show=full)
 
  𝜏1,𝑖 = 𝐾𝑝(𝜃2,𝑖 − 𝜃1, 𝑖) + 𝐾𝑑( ˙𝜃2,𝑖 − ˙𝜃1,𝑖) − 𝐾( ˙𝜃1,𝑖)
 
@@ -30,7 +32,7 @@ The magic of this setup is done with these 2 simple formulas.
 
 ## **What you will need**
 
-You will need to create a simple mobile robot is:
+We recommend these items to create a simple test jig:
 
 * 2 x spectral micro BLDC - used for 2 wheels 
 * Wires to connect everything up: [CAN wires](https://source-robotics.com/products/spectral-micro-can-cable), [Power wires](https://source-robotics.com/products/spectral-micro-power-cable)
@@ -38,14 +40,15 @@ You will need to create a simple mobile robot is:
 * 1 x [CAN adapter](https://source-robotics.com/products/canvas-usb-to-can-adapter)
 * 1 x 24V power supply
 * A Laptop or raspberry pi
+* [UART adapter](https://source-robotics.com/products/usb-to-serial-adapter)
 
 ## **Setup**
 
-Here we are showing you the setup for any 2 motors, for our example we are using 2 x [ssg48 grippers](https://source-robotics.com/products/compliant-gripper) that are connected in the exactly the same setup.
+Here we are showing you the setup for any 2 motors, for example we are using 2 x [ssg48 grippers](https://source-robotics.com/products/compliant-gripper) that are connected in exactly the same setup.
 
 ![drawing](../assets/leg_setup.png)
 
-You will need to follow the  diagram above to wire everything up.
+You will need to follow the diagram above to wire everything up.
 
 * First you need to calibrate your Spectral BLDC drivers with the motors you are using. 
 * After that change the CAN ids of one of the drivers to CAN 1. You can do it by using UART commands: #CANID 1 and after that #Save
@@ -56,7 +59,7 @@ You will need to follow the  diagram above to wire everything up.
 
 This code will run on your PC and it will communicate with the drivers from the CAN adapter.
 
-More advanced code that allows the same setup to communicate over UDP can be found here: [Link](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main/examples/Advanced/SSG48%20gripper%20bilateral%20teleop)
+More advanced code that allows communication over UDP can be found here: [Link](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main/examples/Advanced/SSG48%20gripper%20bilateral%20teleop)
 
 
 ``` py title="Spectral_mobile_robot_xbox.py"
@@ -128,10 +131,10 @@ while(1):
                 initial_setup[UnpackedMessageID[0]] = 1
                 Joint[UnpackedMessageID[0]].determine_sector(Motor[UnpackedMessageID[0]].position)
 
-
+    # The magic
     T0 = Kp*( position_values[1] -  position_values[0]) + Kd*(Motor[1].speed - Motor[0].speed) - Kk*(Motor[0].speed)
     T1 = Kp*( position_values[0] -  position_values[1]) + Kd*(Motor[0].speed - Motor[1].speed) - Kk*(Motor[1].speed)
-    
+    # There are no delays here, we send as fast as possible!
 
 
 ```
