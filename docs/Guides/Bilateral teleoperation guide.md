@@ -13,10 +13,10 @@ Watch these example videos to get a "feel" of the concept:
 - [Gripper bilateral](https://www.youtube.com/watch?v=8jfgFuEFNdI) 
 - [2DOF arm bilateral](https://twitter.com/SourceRobotics/status/1812872129148342691)
 
-## **What is this used for?**
 
-These kind of setup is perfect for: Teleoperation, Imitation learning, Virtual Environments...
 
+!!! Note annotate "**What is this used for?**" 
+    These kind of setup is perfect for: Teleoperation, Imitation learning, Virtual Environments...
 
 ## **The algorithm**
 The magic of this setup is done with these 2 simple formulas.
@@ -27,7 +27,8 @@ The magic of this setup is done with these 2 simple formulas.
 
  𝜏2,𝑖 = 𝐾𝑝(𝜃1,𝑖 − 𝜃2, 𝑖) + 𝐾𝑑( ˙𝜃1,𝑖 − ˙𝜃2,𝑖) − 𝐾( ˙𝜃2,𝑖)
 
- You can read more on how it works in our [blog post!](https://source-robotics.com/blogs/blog/force-sensitive-grippers-for-teleoperation-and-imitation-learning)
+!!! Tip annotate "Learn more!" 
+    You can read more on how it works in our [blog post!](https://source-robotics.com/blogs/blog/force-sensitive-grippers-for-teleoperation-and-imitation-learning)
 
 
 ## **What you will need**
@@ -59,7 +60,9 @@ You will need to follow the diagram above to wire everything up.
 
 This code will run on your PC and it will communicate with the drivers from the CAN adapter.
 
-More advanced code that allows communication over UDP can be found here: [Link](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main/examples/Advanced/SSG48%20gripper%20bilateral%20teleop)
+
+!!! Danger annotate "Advanced example" 
+    More advanced code that allows communication over UDP can be found here: [Link](https://github.com/PCrnjak/Spectral-BLDC-Python/tree/main/examples/Advanced/SSG48%20gripper%20bilateral%20teleop) 
 
 
 ``` py title="Spectral_mobile_robot_xbox.py"
