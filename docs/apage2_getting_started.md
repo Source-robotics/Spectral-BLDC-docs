@@ -55,7 +55,7 @@ Multiple Spectral BLDC drivers and nodes can be connected to single CAN bus usin
 !!! Tip annotate "Power connectors can handle max 4 A DC. Usually if you are using 10ohm gimbal motor you can daisy chain 3-4 of them." 
 
 
-<p align="left"> <img src="../assets/daisy_chain.png" alt="drawing" width="700"/> <br /> </p> 
+<p align="left"> <img src="../assets/Daisy_chain.png" alt="drawing" width="700"/> <br /> </p> 
 
 !!! Note annotate "" 
 
