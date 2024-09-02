@@ -177,6 +177,7 @@ There are few cyclic commands available. they initiate a motor to send data ever
 `Default` | Action |  | `Load default config to EEPROM` | **Note this will rewrite all data saved in eeprom (including serial number, hardware version, batch date...) Before using it make sure to manually backup any important data. 
 `Temp` | Action |  | `Get termistor temperature in degrees` | Temperature in degrees
 `Term` | Set/Get |bool | `Enable/disable termistor mesurment `| 0 disabled 1 enabled
+`Tlim` | Set/Get |int | `Set/Get the temperature at which thermal error will trigger`| Be careful here value of 75 is default and it is not recommended to go higher than that unless you know you motor is rated for more
 `Mode` | Action |  | `Get current operating mode` | Operating mode (Open loop, Idle, Positon control...)
 `Vbus` | Action |  | `Get current value of Vbus` | current value of Vbus [mV]
 `Error` | Action |  | `Get current state of all errors` | List of errors
