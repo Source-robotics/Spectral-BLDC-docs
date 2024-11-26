@@ -1,5 +1,10 @@
 # Getting started
 
+## **Spectral Micro BLDC driver** 
+
+You can buy a Spectral Micro starter kit here: [Link](https://source-robotics.com/products/spectral-micro-bldc-starter-kit) <br />
+Or buy a single motor driver here: [Link](https://source-robotics.com/products/spectral-micro-bldc-controller)  
+
 ## **Recommended hardware**
 
 1. [Diametrically magnetized magnet](https://source-robotics.com/products/6x2-5mm-diametrical-neodymium-magnet)

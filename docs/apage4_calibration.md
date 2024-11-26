@@ -99,6 +99,11 @@ Output will look like this:
 
     Pole pair = 11
 
+!!! Tip annotate "Phase wire disconnected" 
+    Motor is wobbling left and right during calibration? One of your motor wire phases is disconnected!
+
+ Motor is wobbling left and right during calibration? One of your phases is disconnected
+
 **Phase order dir**<br />
 Motor will start to spin in both directions.<br />
 Good output will look like this:

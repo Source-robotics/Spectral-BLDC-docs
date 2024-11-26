@@ -43,6 +43,7 @@ Another example is your Vbus is 2V and you are getting Vbus error. You now adjus
 8. Is your CAN bus correctly terminated?
 9. Is your encoder magnet aligned in the center of the pcb and does not wobble?
 10. Is your motor compatible with the motor driver?
+11. Motor is wobbling left and right during calibration? One of your phases is disconnected
  
 
 !!! Note annotate "" 
