@@ -51,6 +51,7 @@ If you want to develop more advanced applications with SimpleFOC you can follow 
 
 This example will spin the motor in open loop and enable serial monitor.<br />
 Use this code as a base for more advanced code you will develop with SimpleFOC.<br />
+In the github folder we also offer full FOC example!
 
 
 ``` C++ title="main.cpp"
