@@ -1,5 +1,7 @@
 # Spectral micro datasheet
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FRhTW86H9zU?si=SiDes9TI78Xi_Qef" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 !!! Note annotate "" 
 **Spectral Micro** is a brushless motor controller designed to offer affordable and capable hardware, complemented by **open-source** software. It supports multiple firmware options and integrates a 14-bit magnetic encoder, inline current sensing, CAN and UART data interface, and provides support for position, velocity, torque, and impedance control. <br /> Everything you need for developing high-performance robotic solutions is included.  <br />
 It is ideal for **gimbal motors**, **quadrupeds**, **robotic arms**, and **grippers**. Check the list of tested motors here!
