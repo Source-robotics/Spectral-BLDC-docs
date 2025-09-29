@@ -102,11 +102,6 @@ In case your spectral BLDC sends any other data (as a response to command) it wi
 
 !!! Note annotate "" 
 
-## **Cyclic**
-**TODO**
-
-!!! Note annotate "" 
-
 ## **Commands**
 
 

@@ -1,5 +1,7 @@
 # Spectral micro datasheet
 
+!!! Note annotate "" 
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/FRhTW86H9zU?si=SiDes9TI78Xi_Qef" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 !!! Note annotate "" 
@@ -9,7 +11,7 @@ It is ideal for **gimbal motors**, **quadrupeds**, **robotic arms**, and **gripp
 
    |   |   Features
     ---- | ---- 
-    <p align="left"> <img src="../assets/spectral.png" alt="drawing" width="600"/> <br /> </p> | **Electrical specs**  <br /> - 3 phase brushless FOC controller <br />  - Voltage input: 12 - 29V   <br />  - Max continuous phase current: 2.8A <br />  - Max phase current: 2.8A (with good colling) <br />  - Inline current sensing <br />  - PWM switching rate: 25 kHz <br />  - Max power: 80W <br />   - Idle power: 0.3W <br />  - Control loop frequency: 5kHz   <br />  - Max electrical frequency: 460 Hz <br />    <br /> **Mechanical specs** <br />   - Mass: 8 g   <br />  - Dimensions: 39mm x 39mm <br />  - Nema 17 compatible mounting hole distances<br />  <br />  **Features** <br />- STM32f103c microcontroller <br />- 14 bit encoder <br />  - CAN and UART communication <br /> -  Daisy chain CAN and power connector  <br />  - EEPROM memory 16 Kbit <br />  -  Hardware overcurrent, over-under voltage and temperature protection  <br />  - Fully open source firmware and support for SimpleFOC <br />  - One additional pin analog input, digital input or output <br />  - Temperature sensor connector <br /> -  Torque, velocity, position, and Impedance control modes <br /> -  Auto calibration features 
+    <p align="left"> <img src="../assets/spectral-Photoroom.png" alt="drawing" width="600"/> <br /> </p> | **Electrical specs**  <br /> - 3 phase brushless FOC controller <br />  - Voltage input: 12 - 29V   <br />  - Max continuous phase current: 2.8A <br />  - Max phase current: 2.8A (with good colling) <br />  - Inline current sensing <br />  - PWM switching rate: 25 kHz <br />  - Max power: 80W <br />   - Idle power: 0.3W <br />  - Control loop frequency: 5kHz   <br />  - Max electrical frequency: 460 Hz <br />    <br /> **Mechanical specs** <br />   - Mass: 8 g   <br />  - Dimensions: 39mm x 39mm <br />  - Nema 17 compatible mounting hole distances<br />  <br />  **Features** <br />- STM32f103c microcontroller <br />- 14 bit encoder <br />  - CAN and UART communication <br /> -  Daisy chain CAN and power connector  <br />  - EEPROM memory 16 Kbit <br />  -  Hardware overcurrent, over-under voltage and temperature protection  <br />  - Fully open source firmware and support for SimpleFOC <br />  - One additional pin analog input, digital input or output <br />  - Temperature sensor connector <br /> -  Torque, velocity, position, and Impedance control modes <br /> -  Auto calibration features 
   
 
 !!! Tip annotate "Each spectral micro BLDC controller is Fully end of line tested." 
@@ -63,7 +65,7 @@ Motor phases are conneceted to U,V and W. Power is connected to DC+ and DC-
 [You can download Spectral micro STEP files here!](https://github.com/PCrnjak/Spectral-Micro-BLDC-controller/tree/main/STEP%20files)
 <p align="left"> <img src="../assets/bldc_step.PNG" alt="drawing" width="600"/> <br /> </p>
 
-Spectral micro uses same hole spacing as NEMA17 format motors.
+Spectral micro uses same hole spacing as **NEMA17 format** motors.
 !!! Note annotate "Magnetic encoder is located exactly at the middle of the board!" 
 <p align="left"> <img src="../assets/micro_dimensions.PNG" alt="drawing" width="600"/> <br /> </p>
 
