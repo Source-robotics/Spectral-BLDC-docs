@@ -60,7 +60,7 @@ Multiple Spectral BLDC drivers and nodes can be connected to single CAN bus usin
 !!! Tip annotate "Power connectors can handle max 4 A DC. Usually if you are using 10ohm gimbal motor you can daisy chain 3-4 of them." 
 
 
-<p align="left"> <img src="../assets/Daisy_chain.png" alt="drawing" width="700"/> <br /> </p> 
+<p align="left"> <img src="../assets/Daisy_chain-Photoroom.png" alt="drawing" width="700"/> <br /> </p> 
 
 !!! Note annotate "" 
 
@@ -69,11 +69,11 @@ Multiple Spectral BLDC drivers and nodes can be connected to single CAN bus usin
 Solder the termistor like shown in the image. 
 !!! Tip annotate "Thermistor is disabled by default. To enable it use command #Term 1" 
 
-<p align="left"> <img src="../assets/TERM11.png" alt="drawing" width="600"/> <br /> </p> 
+<p align="left"> <img src="../assets/TERM1-Photoroom.png" alt="drawing" width="600"/> <br /> </p> 
 
 Thermistor needs to be placed inside the motor coils. You can usually do that thru the one of the mounting holes on the bottom of the motor. You can apply thermal cement on the thermistor in the motor coils to secure it in place and improve termal conductivity.
 
-<p align="left"> <img src="../assets/TERM2.png" alt="drawing" width="600"/> <br /> </p> 
+<p align="left"> <img src="../assets/TERM2-Photoroom.png" alt="drawing" width="600"/> <br /> </p> 
 
 !!! Note annotate "" 
 

@@ -97,4 +97,5 @@ Check [calibration page]() for these issues.
 
 * Make sure you have same baud rate on spectral BLDC and host device. Default for spectral BLDC is 256000
 
+!!! Note annotate "" 
 

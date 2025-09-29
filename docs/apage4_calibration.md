@@ -1,12 +1,16 @@
 # Calibration
 
+!!! Note annotate "" 
+
 Spectral firmware has autocalibration feature that allows you to automatically detect and tune your motor parameters. It detects the following:
 
 * Motor phase resistance 
 * Motor phase inductance
 * Motor pole pair
-* Motor phase order **Currently has a bug and requires some manual adjustment**
+* Motor phase order
 * Current loop PID parameters
+* Motor Kt, KV and flux linkage
+* Fine tune electrical angle
 
 !!! Tip annotate "Vbus voltage" 
     When calibrating the motor use 24V supply voltage for the best results! 
@@ -25,7 +29,7 @@ Spectral firmware has autocalibration feature that allows you to automatically d
 ## **Default calibration settings**
 Calibration default setting are:<br />
 
-* **Current loop bandwidth: 100.00Hz** -> Used to calculate current loop PI parameters, setting this too high will result in vibrating motor and audiable noise
+* **Current loop bandwidth: 500.00Hz** -> Used to calculate current loop PI parameters, setting this too high will result in vibrating motor and audiable noise
 * **Resistance voltage: 1000mV**  -> We start to measure resistance at this voltage and increase it until power dissipation reaches the "Max Power dissipation" parameter below
 * **Max Power dissipation: 12.00W** -> Used for resistance measure and as a maximum that we can dissipate when calculating inductance
 * **Open loop voltage: 5000mV** -> What voltage we will use for open loop control (used to calculate Pole pairs)       
@@ -150,6 +154,28 @@ After the successful config is saved you dont need to re run calibration when yo
     There is a known issue related to the encoder magnet's attachment to the motor rotor. If the magnet is not securely fastened and can slip or rotate freely, the motor may incorrectly report that the calibration process was successful when, in fact, it was not. To avoid this problem, it's crucial to ensure that the magnet is firmly secured to the motor rotor. Proper attachment of the magnet ensures the accuracy of the calibration process and prevents potential errors in motor operation.
 
 !!! Note annotate "" 
+
+
+## **OPTIONAL Encoder zero and electrical zero align**
+
+
+In a Field-Oriented Control (FOC) system, we want the \(I_q\) current to produce **pure torque**, while \(I_d\) produces the magnetic field. But when those two “zero points” don’t line up, the controller ends up injecting some \(I_q\) into \(I_d\). This is called **cross-coupling**, and it leads to a few tell-tale symptoms:
+
+-  **Asymmetric torque:** Forward and reverse torque constants (\(K_t\)) come out different.  
+-  **Extra heating:** Part of the current is wasted creating unwanted field instead of torque.  
+-  **Reduced efficiency:** The motor draws more current for the same torque.
+
+The fix? Properly calibrate your electrical angle (often called the **theta offset**) so that your encoder’s zero aligns with the motor’s true electrical zero. Once they match, \(I_q\) becomes pure torque in **both directions**, torque symmetry returns, and your motor runs more efficiently and cooler.
+
+After you ran **#Cal** command you need to run **#Calangle** command. <br />
+
+Your motor will start to spin in one direction and then swith to another multiple times. This process can take up to 2 minutes, if it takes longer it will timeout and return that theta_offset is 0.00 (You can check what current theta_offset is by typing #Offset). If it is successful you will see that #Offset will retrun some value different from 0. To check it again you can command motor to spin in one direction with some current setpoint like #Iq 500, and note the speed with #V. Then do the same for #Iq -500 and note the speed with #V. The speeds for both directions should be around the same value.
+
+**After you ran #Calangle and you confirmed it was successful you need to run #Cal again to re-calulate correct Kt and KV values.**
+
+
+!!! Note annotate "" 
+
 
 ## **Troubleshooting**
 

@@ -14,7 +14,6 @@ Default baud rate is: 256000 (Max tested baudrate is 1000 0000)
 !!! Note annotate "" 
 
 ## **How to connect**
-* TODO how to connect to serial adapter
 
 !!! Danger annotate "Voltage warrning" 
     Spectral micro UART port uses 3.3 volts. Using 5V will destroy your board!
@@ -143,6 +142,7 @@ There are few cyclic commands available. they initiate a motor to send data ever
 `KP` | Set/Get | float | `Set/Get KP of impedance PD loop` |  Current value of KP 
 `KD` | Set/Get | float | `Set/Get KD of impedance PD loop` |  Current value of KD
 `Rstint` | Set/Get | bool | `Set/Get do we want to reset integral accumulators after receiving new setopint, default is 0.` | 0 if disabled 1 if enabled
+`Vlim` | Set/Get | int | `Voltage limit for Ud and Uq voltages. ` | Current value of Vlim in V
 
 
 
@@ -218,5 +218,3 @@ Commands used when in gripper mode. Procedure:
 
 !!! Note annotate "" 
 
-## **Cyclic commands**
-TODO

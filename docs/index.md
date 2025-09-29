@@ -1,6 +1,6 @@
-# Index
+# **Index**
 
-## **Spectral micro is in beta stage and docs and firmware are under constant development!**
+!!! Tip annotate "*Spectral micro is in beta stage and docs and firmware are under constant development!**" 
 
 You can buy a Spectral Micro starter kit here: [Link](https://source-robotics.com/products/spectral-micro-bldc-starter-kit) <br />
 Or buy a single motor driver here: [Link](https://source-robotics.com/products/spectral-micro-bldc-controller)  
@@ -13,8 +13,6 @@ Or buy a single motor driver here: [Link](https://source-robotics.com/products/s
 * [PID tuning](https://source-robotics.github.io/Spectral-BLDC-docs/apage5_PID_tuning/)
 * [UART interface](https://source-robotics.github.io/Spectral-BLDC-docs/apage6_uart/)
 * [CAN interface](https://source-robotics.github.io/Spectral-BLDC-docs/apage7_can/)
-* [Control features](https://source-robotics.github.io/Spectral-BLDC-docs/apage8_control_principles/)
-* [GUI interface](https://source-robotics.github.io/Spectral-BLDC-docs/apage9_2_GUI//)
 * [Tested motors](https://source-robotics.github.io/Spectral-BLDC-docs/apage9_3_tested_motors/)
 * [Theory corner](https://source-robotics.github.io/Spectral-BLDC-docs/apage9_4_theory_corner/)
 * [Troubleshooting](https://source-robotics.github.io/Spectral-BLDC-docs/apage9_5_troublestooting/)
@@ -22,13 +20,8 @@ Or buy a single motor driver here: [Link](https://source-robotics.com/products/s
 
 **Guides**
 
-* [Arduino guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Arduino%20guide/)
-* [CAN bus guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/CAN%20bus%20guide/)
 * [Mobile robot guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Mobile%20robot%20guide/)
 * [Python guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Python%20guide/)
-* [ROS2 guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/ROS2%20guide/)
-* [Serial terminal guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/UART%20communication%20guide/)
-* [Simple robot arm guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Simple%20robot%20arm%20guide/)
 * [Quadruped robot guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Quadruped%20guide/)
 * [Gravity compensation guide]()
 * [Bilateral teleoperation guide](https://source-robotics.github.io/Spectral-BLDC-docs/Guides/Bilateral%20teleoperation%20guide/)

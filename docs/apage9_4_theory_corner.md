@@ -1,11 +1,6 @@
 # Theory corner
 
-TODO
-
-Cool sites and articles:
-* [https://robotics-explained.com/](https://robotics-explained.com/)
-
-Describing impedance and admittance control in the context of a robot interacting with its environment can help clarify their differences and applications.
+!!! Note annotate "" 
 
 ## Impedance Control
 
@@ -25,7 +20,20 @@ Impedance control regulates the force output of a system based on the position e
 - A robot arm is drilling into a surface. Impedance control ensures the robot maintains a steady drilling force despite variations in the surface hardness. If the surface becomes harder, the robot increases its force to maintain the drilling motion.
 
 **Equation**:
-$$F{\text{control}}= \frac{d^2x}{dt^2} + B \frac{dx}{dt} + Kx \$$
+
+𝐹_control = 𝑀𝑥̈ + 𝐵𝑥̇ + 𝐾𝑥
+
+- 𝑀 – virtual mass  
+- 𝐵 – **virtual damping coefficient**  
+- 𝐾 – **virtual stiffness**  
+- 𝐹_ext – external force measured by a force/torque sensor  
+- 𝑥 – position  
+- 𝑥̇ – velocity  
+- 𝑥̈ – acceleration
+
+---
+
+!!! Note annotate "" 
 
 ### Admittance Control
 
@@ -45,10 +53,40 @@ Admittance control regulates the position or velocity of a system based on the f
 - A robot arm is holding a tray while a person places objects on it. Admittance control allows the robot to adjust its position smoothly to accommodate the added weight, ensuring the tray remains stable.
 
 **Equation** (for velocity admittance control):
-$$v_{\text{desired}} = \frac{F_{\text{ext}} - Kx}{B} \$$
+
+In many practical controllers, the virtual inertia 𝑀 is neglected to reduce complexity.  
+The model simplifies to:
+
+𝐹_ext = 𝐵𝑥̇ + 𝐾𝑥
+
+If we solve for the desired velocity 𝑣_desired, we get:
+
+𝑣_desired = (𝐹_ext − 𝐾𝑥) / 𝐵
+
+✅ **Meaning of terms:**  
+- 𝐵 – virtual damping coefficient, controls how *fast* the robot reacts  
+- 𝐾 – virtual stiffness, determines how much position error contributes to motion  
+- 𝐹_ext – external force input  
+- 𝑣_desired – commanded velocity  
+
+**Intuition:**  
+- Increasing 𝐵 → slower, more damped motion  
+- Increasing 𝐾 → stiffer response (less displacement for a given force)
 
 **Equation** (for position admittance control):
-$$x_{\text{desired}} = \frac{1}{K} F_{\text{ext}} - \frac{B}{K} v \$$
+
+You can also solve for the desired position 𝑥_desired directly:
+
+𝑥_desired = (1/𝐾) · 𝐹_ext − (𝐵/𝐾) · 𝑣
+
+✅ **Meaning of terms:**  
+- (1 / 𝐾) · 𝐹_ext – position offset due to external force (compliance)  
+- (𝐵 / 𝐾) · 𝑣 – damping correction (smooths motion and reduces overshoot)  
+- 𝐵 / 𝐾 – ratio defining how strongly damping influences position response
+
+---
+
+!!! Note annotate "" 
 
 ### Summary
 
@@ -62,6 +100,8 @@ $$x_{\text{desired}} = \frac{1}{K} F_{\text{ext}} - \frac{B}{K} v \$$
 - **Control Focus**: Position/velocity based on external force input.
 - **Interaction Feel**: Defines how easily the robot moves (compliance).
 
+---
+
 ### Choosing the Control Method
 
 - **Impedance Control**: Suitable for tasks requiring precise force regulation and maintaining a specific motion despite external disturbances, such as machining or tasks where consistent force application is critical.
@@ -69,6 +109,9 @@ $$x_{\text{desired}} = \frac{1}{K} F_{\text{ext}} - \frac{B}{K} v \$$
 
 By understanding these control strategies in terms of how the robot interacts with its environment, one can better appreciate their applications and benefits in various robotic tasks.
 
+---
+
+!!! Note annotate "" 
 
 ## Compliance
 
@@ -76,11 +119,11 @@ Compliance, in the context of control systems and robotics, refers to the abilit
 
 ### Key Concepts of Compliance
 
-- **Compliance** (\(C\)): It is defined as the inverse of stiffness (\(K\)). Mathematically, compliance \(C\) can be expressed as:
-  \[ C = \frac{1}{K} \]
-  Where \(K\) is the stiffness of the system.
+- **Compliance** (𝐶): It is defined as the inverse of stiffness (𝐾). Mathematically:
 
-- **Stiffness** (\(K\)): It quantifies the resistance of a system to deformation. High stiffness means the system resists deformation strongly when a force is applied.
+𝐶 = 1 / 𝐾
+
+- **Stiffness** (𝐾): It quantifies the resistance of a system to deformation. High stiffness means the system resists deformation strongly when a force is applied.
 
 ### Compliance in Control Systems
 
@@ -114,15 +157,21 @@ Compliance can be implemented in robotic systems through both passive and active
 
 In control equations, compliance is often reflected in how the system responds to forces. For example, in admittance control, the system's compliance is an integral part of the control law:
 
-$$\ x_{\text{desired}} = C \cdot F_{\text{ext}} \$$
+𝑥_desired = 𝐶 · 𝐹_ext
 
 Where:
-- \ x_{\text{desired}} \ is the desired position.
-- \( C \) is the compliance (inverse of stiffness).
-- \( F_{\text{ext}} \) is the external force applied to the system.
+- 𝑥_desired is the desired position.
+- 𝐶 is the compliance (inverse of stiffness).
+- 𝐹_ext is the external force applied to the system.
 
 This equation shows that the desired position change is directly proportional to the applied force, with the proportionality factor being the compliance.
 
-### Summary
+---
+
+!!! Note annotate "" 
+
+## Summary
 
 Compliance is a measure of how easily a system deforms in response to an applied force. In robotics and control systems, compliance is crucial for enabling smooth, adaptive, and safe interactions with the environment and humans. It is the inverse of stiffness and can be implemented both passively and actively. Understanding compliance helps in designing control systems that can effectively manage forces and movements, ensuring both precision and safety in robotic operations.
+
+!!! Note annotate "" 

@@ -31,7 +31,7 @@ Torque bandwidth (current loop bandwitdh) is mesure of how fast a system can res
 Current controller can be auto tuned during the calibration by selecting desired torque/current bandwidth (UART command #Cbw).  Motor calibration measures your motor’s  phase resistance and phase inductance. It uses this information and desired torque bandwidth setpoint to set its current controller gains.
 Default torque bandwitdh is 200 Hz. 
 
-** Generally in industry bandwidths of more than 800 Hz are standard. ** Higher torque bandwidth is desired for legged robots, or other applications where it is necessary to respond to external disturbances as fast as possible. Higher torque bandwidths will result in audiable noise and if they are too large in drive instability.
+**Generally in industry bandwidths of more than 800 Hz are standard.** Higher torque bandwidth is desired for legged robots, or other applications where it is necessary to respond to external disturbances as fast as possible. Higher torque bandwidths will result in audiable noise and if they are too large in drive instability.
 
 We recommned tuning the current controller gains with auto tune feature in #Cal command.
 
@@ -88,7 +88,9 @@ If you think you system is tuned:
 
 <img src="../assets/PDloop.png" alt="drawing" width="1000"/> <br /> </p>
 
-**TODO**
+
+!!! Note annotate "" 
+
 
 ## **Velocity limits**
 
@@ -104,7 +106,7 @@ Motor temperature is important here. To not to destroy your motor; carefully sel
 
 You hear crunching and whining sounds. Your current limit might be too high, lower it.
 
-## **Integral accumulator reset - TODO test**
+## **Integral accumulator reset**
 
 Here's why resetting the integral accumulator might be advantageous:
 
